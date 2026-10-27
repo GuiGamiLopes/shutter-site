@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shutter Lisboa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Reserva quem filma Reels, TikToks e fotos por ti em Lisboa. Preço fechado, pagamento retido até à entrega, e o conteúdo é teu.">
+<meta property="og:title" content="Shutter · Alguém que filma por ti">
+<meta property="og:description" content="Reels, TikToks e fotografia em Lisboa, a partir de 30 minutos. O conteúdo é teu.">
+<meta name="theme-color" content="#141419">
+<!-- Lista de espera: preencher com o projeto Supabase (a chave anon é pública por natureza). -->
+<meta name="shutter:supabase-url" content="https://ilthcatidwkvqcmhhmzc.supabase.co">
+<meta name="shutter:supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlsdGhjYXRpZHdrdnFjbWhobXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMTIxMDMsImV4cCI6MjEwODU4ODEwM30.vMnoS8fAOue1nwKo7MCPXAHfimG8hy3J3SjY57ybPKw">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: visor de câmara. Cada secção é um plano com timecode; o herói fica dentro do enquadramento. */
+:root {
+  --ink: #141419;
+  --coral: #FE513B;
+  --fg: #F3F1EE;
+  --dim: #A3A3AD;
+  --lilac: #FF8B7A;
+  --panel: #1B1B22;
+  --rule: #2A2A33;
+  --bg: #0E0E12;
+  --display: "Unbounded", "Arial Black", sans-serif;
+  --body: "Inter Tight", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 var(--body); }
+h1, h2, h3, p { margin: 0; }
+p { max-width: 60ch; }
+a { color: inherit; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.in { max-width: 1120px; margin: 0 auto; }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3, .logo { font-family: var(--display); font-weight: 700; letter-spacing: -0.03em; text-wrap: balance; }
+.label { font: 500 12px var(--mono); color: var(--lilac); letter-spacing: .12em; text-transform: uppercase; }
+.muted { color: var(--dim); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Topo */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: rgba(14, 14, 18, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+.top .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-size: 1.45rem; letter-spacing: -0.05em; display: inline-flex; align-items: flex-end; gap: 3px; text-decoration: none; }
+.logo i { display: inline-block; width: .3em; height: .3em; background: var(--coral); margin-bottom: .18em; }
+.top nav { display: flex; gap: 22px; font-weight: 500; }
+.top nav a { text-decoration: none; color: var(--dim); }
+.top nav a:hover { color: var(--fg); }
+.rec { font: 500 12px var(--mono); color: var(--dim); display: inline-flex; gap: 8px; align-items: center; }
+.rec::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--coral); animation: blink 1.4s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+@media (prefers-reduced-motion: reduce) { .rec::before { animation: none; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 24px; border-radius: 999px; font: 600 1rem var(--body); text-decoration: none; background: var(--coral); color: var(--ink); border: 0; cursor: pointer; transition: transform .15s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn.alt { background: transparent; color: var(--fg); border: 1.5px solid var(--dim); }
+.btn.sm { min-height: 42px; padding: 0 18px; font-size: .92rem; }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+.row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Herói dentro do enquadramento */
+.frame { position: relative; margin-block: clamp(24px, 5vw, 48px); padding: clamp(28px, 6vw, 72px); }
+.frame > i { position: absolute; width: 36px; height: 36px; border: 2px solid var(--fg); }
+.frame > i:nth-of-type(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.frame > i:nth-of-type(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+.frame > i:nth-of-type(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+.frame > i:nth-of-type(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+.tc { font: 500 13px var(--mono); color: var(--dim); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: 24px; }
+h1 { font-size: clamp(2.3rem, 6.4vw, 4.8rem); line-height: 1.02; }
+h1 em { font-style: normal; color: var(--coral); }
+.lede { color: var(--dim); font-size: 1.18rem; margin: 22px 0 30px; }
+
+/* Ecrã 9:16 com a reserva */
+.phone { justify-self: center; width: min(100%, 290px); max-width: 100%; aspect-ratio: 9 / 16; background: #0B0B0F; border: 1px solid var(--rule); border-radius: 32px; padding: 10px; }
+.screen { height: 100%; background: var(--bg); color: var(--fg); border-radius: 24px; padding: 18px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; font-size: .88rem; }
+.screen .when { font: 500 .68rem var(--mono); color: var(--dim); letter-spacing: .06em; }
+.screen h3 { font-size: 1.1rem; letter-spacing: -0.04em; }
+.shot { height: 92px; border-radius: 14px; background: center/cover no-repeat; flex: none; }
+.places { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.place { margin: 0; }
+.place img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 18px; display: block; background: var(--panel); }
+.place figcaption { margin-top: 10px; font-weight: 600; }
+.place small { display: block; color: var(--dim); font-weight: 400; font-size: .88rem; }
+@media (max-width: 900px) { .places { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.opt { border: 1.5px solid var(--panel); background: var(--panel); border-radius: 14px; padding: 9px 11px; }
+.opt.on { border-color: var(--coral); background: #2A1A18; }
+.opt b { display: block; font-weight: 600; }
+.opt small { color: var(--dim); font-size: .74rem; line-height: 1.3; display: block; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { font-size: .72rem; border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px; }
+.chip.on { background: var(--fg); color: var(--ink); border-color: var(--fg); }
+.who { display: flex; align-items: center; gap: 9px; border-top: 1px solid var(--rule); padding-top: 10px; margin-top: auto; }
+.av { width: 34px; height: 34px; border-radius: 50%; background: #24242C; color: var(--fg); display: grid; place-items: center; font-weight: 600; font-size: .74rem; flex: none; }
+.who div { flex: 1; min-width: 0; }
+.who b { display: block; }
+.who small { color: var(--dim); font-size: .72rem; }
+.price { font: 700 1.05rem var(--display); }
+.pay { background: var(--coral); color: var(--ink); border-radius: 999px; text-align: center; font-weight: 600; padding: 10px; }
+
+.strip { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.strip .in { padding-block: 22px; display: flex; flex-wrap: wrap; gap: 12px 40px; font: 500 14px var(--mono); }
+.strip b { color: var(--coral); font-weight: 500; margin-right: 6px; }
+
+/* Secções */
+.sec { padding-block: clamp(64px, 9vw, 112px); }
+.sec + .sec { border-top: 1px solid var(--rule); }
+.head { display: flex; flex-direction: column; gap: 12px; margin-bottom: clamp(30px, 5vw, 52px); }
+.head h2 { font-size: clamp(1.8rem, 4.2vw, 3rem); line-height: 1.06; max-width: 20ch; }
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--panel); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.card .t { font: 500 12px var(--mono); color: var(--lilac); }
+.card h3 { font-size: 1.2rem; }
+.card p { color: var(--dim); font-size: .97rem; }
+.rule3 > div { border-top: 2px solid var(--coral); padding-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.rule3 h3 { font-size: 1.3rem; }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+th { font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+td:last-child, th:last-child { text-align: right; }
+td b { font: 700 1.2rem var(--display); }
+.note { color: var(--dim); font-size: .95rem; margin-top: 16px; }
+
+.list { list-style: none; padding: 0; margin: 24px 0 30px; display: grid; gap: 14px; }
+.list li { display: flex; gap: 12px; align-items: baseline; }
+.list li::before { content: ""; width: 9px; height: 9px; background: var(--coral); flex: none; transform: translateY(-1px); }
+.slip { background: var(--panel); color: var(--fg); border-radius: 20px; padding: 26px; font-variant-numeric: tabular-nums; }
+.slip .label { color: var(--dim); }
+.slip .r { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--rule); }
+.slip .r span:first-child { color: var(--dim); }
+.slip .r:last-child { border: 0; padding-top: 16px; font: 700 1.35rem var(--display); }
+.slip .r:last-child span:first-child { color: var(--fg); }
+
+/* Lista de espera */
+form { display: grid; gap: 12px; }
+.seg { display: flex; gap: 8px; flex-wrap: wrap; }
+.seg label { flex: 1; min-width: 140px; position: relative; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: block; text-align: center; border: 1.5px solid var(--rule); border-radius: 999px; padding: 12px; font-weight: 600; cursor: pointer; }
+.seg input:checked + span { background: var(--fg); color: var(--ink); border-color: var(--fg); }
+.seg input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
+.field { display: flex; gap: 10px; flex-wrap: wrap; }
+.field input { flex: 1 1 220px; min-width: 0; min-height: 52px; border: 1.5px solid var(--rule); border-radius: 999px; padding: 0 20px; font: 1rem var(--body); background: var(--panel); color: var(--fg); }
+.field input::placeholder { color: var(--dim); }
+.field input:focus { border-color: var(--fg); outline: none; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.msg { min-height: 1.5em; font-weight: 500; }
+.msg.err { color: #FF8A78; }
+
+footer .in { padding-block: 36px; display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; color: var(--dim); font-size: .92rem; border-top: 1px solid var(--rule); }
+footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .hero, .split { grid-template-columns: minmax(0, 1fr); }
+  .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid3 { grid-template-columns: minmax(0, 1fr); }
+  .top nav { display: none; }
+}
+@media (max-width: 520px) { .grid4 { grid-template-columns: minmax(0, 1fr); } .top .rec { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="top gut">
+  <div class="in">
+    <a class="logo" href="#topo" aria-label="Shutter, início">shutter<i></i></a>
+    <nav aria-label="Secções">
+      <a href="#como">Como funciona</a>
+      <a href="#precos">Preços</a>
+      <a href="#criadores">Para criadores</a>
+    </nav>
+    <span class="rec">REC · LISBOA</span>
+    <a class="btn sm" href="#lista">Lista de espera</a>
+  </div>
+</header>
+
+<main id="topo">
+  <section class="gut">
+    <div class="in frame"><i></i><i></i><i></i><i></i>
+      <div class="tc"><span>9:16 · 4K</span><span>00:00:30:00</span></div>
+      <div class="hero">
+        <div>
+          <h1>Alguém que filma <em>por ti</em>, quando precisas.</h1>
+          <p class="lede">Reserva um videomaker ou fotógrafo em Lisboa para o teu próximo Reel. Preço fechado, entrega em 24 horas, e as imagens são tuas.</p>
+          <div class="row">
+            <a class="btn" href="#lista">Quero reservar</a>
+            <a class="btn alt" href="#criadores">Sou criador</a>
+          </div>
+        </div>
+        <div class="phone" role="img" aria-label="Ecrã da app com uma reserva de Reel na LX Factory com a Inês, por 33 euros">
+          <div class="screen">
+            <span class="when">SÁB 14 · 18:30 · 30 MIN</span>
+            <div class="shot" style="background-image:url(img/lx-factory.jpg)"></div>
+            <h3>O que queres criar?</h3>
+            <div class="opt on"><b>Criar Reel ou TikTok</b><small>Vídeo vertical curto, filmado para onde o vais publicar.</small></div>
+            <div class="opt"><b>Fotografia</b><small>Recebes todas as fotos que prestam.</small></div>
+            <div class="chips"><span class="chip on">LX Factory</span><span class="chip">Alfama</span><span class="chip">Belém</span></div>
+            <div class="who"><span class="av">IM</span><div><b>Inês M.</b><small>★ 4,9 · confirma na hora</small></div><span class="price">€33</span></div>
+            <div class="pay">Reservar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip gut"><div class="in"><span><b>●</b>desde €18 · 30 min</span><span><b>●</b>pagamento retido até à entrega</span><span><b>●</b>100% dos direitos para ti</span></div></div>
+
+  <section class="sec gut" id="como">
+    <div class="in">
+      <div class="head"><p class="label">Como funciona</p><h2>Do link de referência ao vídeo na tua galeria.</h2></div>
+      <div class="grid4">
+        <div class="card"><span class="t">00:01</span><h3>O quê</h3><p>Reel, TikTok, fotografia ou os dois. Colas o link do que queres recriar, ou deixas em freestyle.</p></div>
+        <div class="card"><span class="t">00:02</span><h3>Quando</h3><p>Dia, hora e duração no mesmo ecrã. De 30 minutos a 2 horas, até no próprio dia.</p></div>
+        <div class="card"><span class="t">00:03</span><h3>Onde</h3><p>Escolhes o sítio em Lisboa e vês só quem trabalha nessa zona e está livre.</p></div>
+        <div class="card"><span class="t">00:04</span><h3>Quem</h3><p>Comparas avaliações e preços e reservas. O chat abre quando a sessão fica confirmada.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec gut" id="lisboa">
+    <div class="in">
+      <div class="head"><p class="label">Lisboa é o teu estúdio</p><h2>Escolhe o sítio. Nós levamos quem filma.</h2></div>
+      <div class="places">
+        <figure class="place"><img src="img/lx-factory.jpg" alt="Rua da LX Factory com lojas e pessoas" loading="lazy"><figcaption>LX Factory<small>Alcântara · industrial e cor</small></figcaption></figure>
+        <figure class="place"><img src="img/miradouro-senhora-do-monte.jpg" alt="Miradouro da Senhora do Monte com pinheiros" loading="lazy"><figcaption>Senhora do Monte<small>Graça · vista sobre a cidade</small></figcaption></figure>
+        <figure class="place"><img src="img/praca-do-comercio.jpg" alt="Praça do Comércio com o Arco da Rua Augusta" loading="lazy"><figcaption>Praça do Comércio<small>Baixa · arcadas e rio</small></figcaption></figure>
+        <figure class="place"><img src="img/largo-das-portas-do-sol.jpg" alt="Telhados de Alfama vistos das Portas do Sol" loading="lazy"><figcaption>Portas do Sol<small>Alfama · telhados e luz</small></figcaption></figure>
+        <figure class="place"><img src="img/jardim-da-estrela.jpg" alt="Coreto do Jardim da Estrela entre árvores" loading="lazy"><figcaption>Jardim da Estrela<small>Estrela · verde e sombra</small></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec gut">
+    <div class="in">
+      <div class="head"><p class="label">O que garantimos</p><h2>Três regras que não mudam.</h2></div>
+      <div class="grid3 rule3">
+        <div><h3>O conteúdo é teu</h3><p class="muted">Usas onde quiseres, para sempre, sem dar crédito. Quem filmou só o mostra no perfil dentro da Shutter, e só se autorizares.</p></div>
+        <div><h3>Só pagas pela entrega</h3><p class="muted">O pagamento fica retido até receberes os ficheiros. Se ninguém aparecer, o reembolso é total.</p></div>
+        <div><h3>Recebes tudo o que presta</h3><p class="muted">Sem pacotes de 10 fotos nem marcas de água. Todas as fotos e vídeos aproveitáveis, em 24 horas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec gut" id="precos">
+    <div class="in split">
+      <div class="head" style="margin:0">
+        <p class="label">Preços</p>
+        <h2>O preço que vês é o que pagas.</h2>
+        <p class="muted">Cada criador define o seu preço, sempre com IVA incluído. Estes são os mínimos da plataforma, para ninguém trabalhar abaixo do que vale.</p>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th scope="col">Duração</th><th scope="col">A partir de</th></tr></thead>
+          <tbody>
+            <tr><td>30 min</td><td><b>€18</b></td></tr>
+            <tr><td>1 h</td><td><b>€35</b></td></tr>
+            <tr><td>1 h 30</td><td><b>€50</b></td></tr>
+            <tr><td>2 h</td><td><b>€63</b></td></tr>
+          </tbody>
+        </table>
+        <p class="note">Vídeo e fotos na mesma sessão: pagas o serviço mais caro por inteiro e o segundo a metade. Acresce uma taxa de serviço de 6%. Cancelar com mais de 24 h é grátis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec gut" id="criadores">
+    <div class="in split">
+      <div>
+        <p class="label">Para quem filma e fotografa</p>
+        <h2 style="font-size:clamp(1.8rem,4.2vw,3rem);line-height:1.06;margin-top:12px">Filmas? <span style="color:var(--coral)">Recebe por sessão.</span></h2>
+        <ul class="list">
+          <li>Defines os teus preços, a tua zona e o teu horário.</li>
+          <li>Aceitas pedidos à mão ou deixas a agenda aceitar sozinha.</li>
+          <li>O dinheiro chega ao teu banco depois de cada entrega.</li>
+          <li>Não precisas de curso: contam as avaliações e a pontualidade.</li>
+        </ul>
+        <a class="btn" href="#lista" data-role="shutter">Quero trabalhar na Shutter</a>
+      </div>
+      <div class="slip" aria-label="Exemplo: numa sessão de 100 euros recebes 85">
+        <p class="label" style="margin-bottom:8px">Sessão de exemplo, isento de IVA</p>
+        <div class="r"><span>O cliente paga</span><span>€100,00</span></div>
+        <div class="r"><span>Comissão Shutter (15%)</span><span>−€15,00</span></div>
+        <div class="r"><span>Recebes</span><span>€85,00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec gut" id="lista">
+    <div class="in split">
+      <div class="head" style="margin:0">
+        <p class="label">Lista de espera</p>
+        <h2>Começamos em Lisboa.</h2>
+        <p class="muted">Deixa o teu email e avisamos quando a app estiver na App Store e no Google Play. Só um email, sem newsletters.</p>
+      </div>
+      <form id="waitlist" novalidate>
+        <div class="seg" role="radiogroup" aria-label="Vens para">
+          <label><input type="radio" id="role-client" name="role" value="client" checked><span>Quero reservar</span></label>
+          <label><input type="radio" id="role-shutter" name="role" value="shutter"><span>Quero trabalhar</span></label>
+        </div>
+        <div class="field">
+          <label for="email" class="sr">Email</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="o.teu@email.pt" required>
+          <button class="btn" type="submit">Avisem-me</button>
+        </div>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="gut">
+  <div class="in">
+    <a class="logo" href="#topo" style="font-size:1.2rem">shutter<i></i></a>
+    <nav aria-label="Legal">
+      <a href="privacidade.html">Privacidade</a>
+      <a href="creditos.html">Créditos das fotos</a>
+      <span>ola@shutter.app</span>
+    </nav>
+    <span>Lisboa, 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('waitlist');
+  var msg = document.getElementById('msg');
+  var url = (document.querySelector('meta[name="shutter:supabase-url"]') || {}).content;
+  var key = (document.querySelector('meta[name="shutter:supabase-anon-key"]') || {}).content;
+  function say(text, err) { msg.textContent = text; msg.className = err ? 'msg err' : 'msg'; }
+  // "Quero trabalhar" leva à lista já com a opção certa escolhida.
+  document.querySelectorAll('a[data-role="shutter"], a[href="#criadores"]').forEach(function (a) {
+    if (a.dataset.role) a.addEventListener('click', function () { document.getElementById('role-shutter').checked = true; });
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = form.email.value.trim();
+    var role = form.querySelector('input[name="role"]:checked').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say('Esse email não parece válido.', true); form.email.focus(); return; }
+    if (!url || !key) { say('Pré-visualização: a lista de espera fica ativa quando o site estiver ligado ao Supabase.'); return; }
+    say('A guardar…');
+    fetch(url + '/rest/v1/waitlist', {
+      method: 'POST',
+      headers: { apikey: key, Authorization: 'Bearer ' + key, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify({ email: email, role: role })
+    }).then(function (r) {
+      if (r.ok || r.status === 409) { form.reset(); say('Feito. Avisamos-te quando a app sair.'); }
+      else say('Não conseguimos guardar. Tenta outra vez daqui a pouco.', true);
+    }).catch(function () { say('Sem ligação. Tenta outra vez daqui a pouco.', true); });
+  });
+})();
+</script>
+</body>
+</html>

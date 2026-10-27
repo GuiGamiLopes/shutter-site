@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Email confirmado · Shutter</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Inter+Tight:wght@400;600&display=swap">
+<style>
+:root { --ink:#141419; --coral:#FE513B; --fg:#F3F1EE; --dim:#A3A3AD; --rule:#2A2A33; color-scheme: dark; }
+body { margin:0; background:#0E0E12; color:var(--fg); font:17px/1.65 "Inter Tight", system-ui, sans-serif; }
+main { max-width:720px; margin:0 auto; padding-block:40px 80px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { font-family:"Unbounded", sans-serif; letter-spacing:-.03em; line-height:1.15; }
+h1 { font-size:2rem; } h2 { font-size:1.2rem; margin-top:2.2em; }
+p, li { color:var(--dim); } strong { color:var(--fg); }
+.draft { border:1px solid var(--coral); border-radius:12px; padding:12px 16px; color:var(--fg); }
+a { color:var(--fg); }
+.back { display:inline-block; margin-bottom:24px; color:var(--dim); text-decoration:none; }
+
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 26px; border-radius:999px; background:var(--coral); color:var(--ink); font-weight:600; text-decoration:none; margin:18px 0 8px; }
+.ok { width:56px; height:56px; border-radius:50%; background:#2A1A18; color:var(--coral); display:grid; place-items:center; font-size:28px; margin-bottom:18px; }
+</style></head><body><main>
+<a class="back" href="./">← Shutter</a>
+<div class="ok" aria-hidden="true">✓</div>
+<h1 id="t">Email confirmado.</h1>
+<p id="d">A tua conta Shutter está pronta. Volta à app e entra com o teu email e palavra-passe.</p>
+<a class="btn" href="shutter://login">Abrir a Shutter</a>
+<p>Abriste este link no computador? Não faz mal: a conta já ficou confirmada. Abre a app no telemóvel e entra.</p>
+<script>
+// O Supabase devolve erros no endereço (ex.: link expirado): mostra-os em português.
+var q = new URLSearchParams((location.hash || '').slice(1) + '&' + location.search.slice(1));
+if (q.get('error')) {
+  document.getElementById('t').textContent = 'Este link já não é válido.';
+  document.getElementById('d').textContent = q.get('error_code') === 'otp_expired'
+    ? 'O link expirou ou já foi usado. Se já confirmaste antes, entra na app. Se não, abre a app e pede um novo email de confirmação.'
+    : 'Não foi possível confirmar o email com este link. Abre a app e pede um novo email de confirmação.';
+  document.querySelector('.ok').textContent = '!';
+}
+</script>
+</main></body></html>
