@@ -21,7 +21,7 @@ a { color:var(--fg); }
 <h1 id="t">Email confirmado.</h1>
 <p id="d">A tua conta Shutter está pronta. Volta à app e entra com o teu email e palavra-passe.</p>
 <a class="btn" href="shutter://login">Abrir a Shutter</a>
-<p>Abriste este link no computador? Não faz mal: a conta já ficou confirmada. Abre a app no telemóvel e entra.</p>
+<p id="pc">Abriste este link no computador? Não faz mal: a conta já ficou confirmada. Abre a app no telemóvel e entra.</p>
 <script>
 // O Supabase devolve erros no endereço (ex.: link expirado): mostra-os em português.
 var q = new URLSearchParams((location.hash || '').slice(1) + '&' + location.search.slice(1));
@@ -31,6 +31,7 @@ if (q.get('error')) {
     ? 'O link expirou ou já foi usado. Se já confirmaste antes, entra na app. Se não, abre a app e pede um novo email de confirmação.'
     : 'Não foi possível confirmar o email com este link. Abre a app e pede um novo email de confirmação.';
   document.querySelector('.ok').textContent = '!';
+  document.getElementById('pc').hidden = true;
 }
 </script>
 </main></body></html>
