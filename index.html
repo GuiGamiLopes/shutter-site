@@ -6,13 +6,12 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#0E0E12">
+<meta name="theme-color" content="#FFFFFF">
 <title>Shutter Lisboa</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Reserva quem filma Reels, TikToks e fotos por ti em Lisboa. Preço fechado, pagamento retido até à entrega, e o conteúdo é teu.">
 <meta property="og:title" content="Shutter · Alguém que filma por ti">
 <meta property="og:description" content="Reels, TikToks e fotografia em Lisboa, a partir de 30 minutos. O conteúdo é teu.">
-<meta name="theme-color" content="#141419">
 <!-- Lista de espera: preencher com o projeto Supabase (a chave anon é pública por natureza). -->
 <meta name="shutter:supabase-url" content="https://ilthcatidwkvqcmhhmzc.supabase.co">
 <meta name="shutter:supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlsdGhjYXRpZHdrdnFjbWhobXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMTIxMDMsImV4cCI6MjEwODU4ODEwM30.vMnoS8fAOue1nwKo7MCPXAHfimG8hy3J3SjY57ybPKw">
@@ -24,16 +23,17 @@
 :root {
   --ink: #141419;
   --coral: #FE513B;
-  --fg: #F3F1EE;
-  --dim: #A3A3AD;
-  --lilac: #FF8B7A;
-  --panel: #1B1B22;
-  --rule: #2A2A33;
-  --bg: #0E0E12;
+  --fg: #141419;
+  --dim: #5C5C66;
+  --lilac: #D2351F;
+  --coral-text: #D2351F;
+  --panel: #F3F3F6;
+  --rule: #E4E4E9;
+  --bg: #FFFFFF;
   --display: "Unbounded", "Arial Black", sans-serif;
   --body: "Inter Tight", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
-  color-scheme: dark;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -51,7 +51,7 @@ h1, h2, h3, .logo { font-family: var(--display); font-weight: 700; letter-spacin
 
 /* Topo */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: rgba(14, 14, 18, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: rgba(255, 255, 255, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
 .top .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
 .logo { font-size: 1.45rem; letter-spacing: -0.05em; display: inline-flex; align-items: flex-end; gap: 3px; text-decoration: none; }
 .logo i { display: inline-block; width: .3em; height: .3em; background: var(--coral); margin-bottom: .18em; }
@@ -80,11 +80,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .tc { font: 500 13px var(--mono); color: var(--dim); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 .hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: 24px; }
 h1 { font-size: clamp(2.3rem, 6.4vw, 4.8rem); line-height: 1.02; }
-h1 em { font-style: normal; color: var(--coral); }
+h1 em { font-style: normal; color: var(--coral-text); }
 .lede { color: var(--dim); font-size: 1.18rem; margin: 22px 0 30px; }
 
 /* Ecrã 9:16 com a reserva */
-.phone { justify-self: center; width: min(100%, 290px); max-width: 100%; aspect-ratio: 9 / 16; background: #0B0B0F; border: 1px solid var(--rule); border-radius: 32px; padding: 10px; }
+.phone { justify-self: center; width: min(100%, 290px); max-width: 100%; aspect-ratio: 9 / 16; background: #FFFFFF; border: 1px solid var(--rule); border-radius: 32px; padding: 10px; }
 .screen { height: 100%; background: var(--bg); color: var(--fg); border-radius: 24px; padding: 18px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; font-size: .88rem; }
 .screen .when { font: 500 .68rem var(--mono); color: var(--dim); letter-spacing: .06em; }
 .screen h3 { font-size: 1.1rem; letter-spacing: -0.04em; }
@@ -96,14 +96,14 @@ h1 em { font-style: normal; color: var(--coral); }
 .place small { display: block; color: var(--dim); font-weight: 400; font-size: .88rem; }
 @media (max-width: 900px) { .places { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .opt { border: 1.5px solid var(--panel); background: var(--panel); border-radius: 14px; padding: 9px 11px; }
-.opt.on { border-color: var(--coral); background: #2A1A18; }
+.opt.on { border-color: var(--coral); background: #FFF0ED; }
 .opt b { display: block; font-weight: 600; }
 .opt small { color: var(--dim); font-size: .74rem; line-height: 1.3; display: block; }
 .chips { display: flex; flex-wrap: wrap; gap: 5px; }
 .chip { font-size: .72rem; border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px; }
-.chip.on { background: var(--fg); color: var(--ink); border-color: var(--fg); }
+.chip.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .who { display: flex; align-items: center; gap: 9px; border-top: 1px solid var(--rule); padding-top: 10px; margin-top: auto; }
-.av { width: 34px; height: 34px; border-radius: 50%; background: #24242C; color: var(--fg); display: grid; place-items: center; font-weight: 600; font-size: .74rem; flex: none; }
+.av { width: 34px; height: 34px; border-radius: 50%; background: #E6E6EB; color: var(--fg); display: grid; place-items: center; font-weight: 600; font-size: .74rem; flex: none; }
 .who div { flex: 1; min-width: 0; }
 .who b { display: block; }
 .who small { color: var(--dim); font-size: .72rem; }
@@ -112,7 +112,7 @@ h1 em { font-style: normal; color: var(--coral); }
 
 .strip { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 .strip .in { padding-block: 22px; display: flex; flex-wrap: wrap; gap: 12px 40px; font: 500 14px var(--mono); }
-.strip b { color: var(--coral); font-weight: 500; margin-right: 6px; }
+.strip b { color: var(--coral-text); font-weight: 500; margin-right: 6px; }
 
 /* Secções */
 .sec { padding-block: clamp(64px, 9vw, 112px); }
@@ -152,7 +152,7 @@ form { display: grid; gap: 12px; }
 .seg label { flex: 1; min-width: 140px; position: relative; }
 .seg input { position: absolute; opacity: 0; pointer-events: none; }
 .seg span { display: block; text-align: center; border: 1.5px solid var(--rule); border-radius: 999px; padding: 12px; font-weight: 600; cursor: pointer; }
-.seg input:checked + span { background: var(--fg); color: var(--ink); border-color: var(--fg); }
+.seg input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .seg input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
 .field { display: flex; gap: 10px; flex-wrap: wrap; }
 .field input { flex: 1 1 220px; min-width: 0; min-height: 52px; border: 1.5px solid var(--rule); border-radius: 999px; padding: 0 20px; font: 1rem var(--body); background: var(--panel); color: var(--fg); }
@@ -160,7 +160,7 @@ form { display: grid; gap: 12px; }
 .field input:focus { border-color: var(--fg); outline: none; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .msg { min-height: 1.5em; font-weight: 500; }
-.msg.err { color: #FF8A78; }
+.msg.err { color: #C8301B; }
 
 footer .in { padding-block: 36px; display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; color: var(--dim); font-size: .92rem; border-top: 1px solid var(--rule); }
 footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -282,7 +282,7 @@ footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
     <div class="in split">
       <div>
         <p class="label">Para quem filma e fotografa</p>
-        <h2 style="font-size:clamp(1.8rem,4.2vw,3rem);line-height:1.06;margin-top:12px">Filmas? <span style="color:var(--coral)">Recebe por sessão.</span></h2>
+        <h2 style="font-size:clamp(1.8rem,4.2vw,3rem);line-height:1.06;margin-top:12px">Filmas? <span style="color:var(--coral-text)">Recebe por sessão.</span></h2>
         <ul class="list">
           <li>Defines os teus preços, a tua zona e o teu horário.</li>
           <li>Aceitas pedidos à mão ou deixas a agenda aceitar sozinha.</li>
