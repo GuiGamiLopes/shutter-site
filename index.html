@@ -6,6 +6,8 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:image" content="https://shutterapp.io/img/icon-512.png">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#FFFFFF">
 <title>Shutter Lisboa</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -22,7 +24,7 @@
 /* Layout: visor de câmara. Cada secção é um plano com timecode; o herói fica dentro do enquadramento. */
 :root {
   --ink: #141419;
-  --coral: #FE513B;
+  --coral: #FF5A3C;
   --fg: #141419;
   --dim: #5C5C66;
   --lilac: #D2351F;
@@ -54,7 +56,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: rgba(255, 255, 255, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
 .top .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
 .logo { font-size: 1.45rem; letter-spacing: -0.05em; display: inline-flex; align-items: flex-end; gap: 3px; text-decoration: none; }
-.logo i { display: inline-block; width: .3em; height: .3em; background: var(--coral); margin-bottom: .18em; }
+.logo i { display: inline-block; width: .3em; height: .3em; border-radius: 50%; background: var(--coral); margin-bottom: .18em; }
 .top nav { display: flex; gap: 22px; font-weight: 500; }
 .top nav a { text-decoration: none; color: var(--dim); }
 .top nav a:hover { color: var(--fg); }
